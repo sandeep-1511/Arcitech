@@ -1,0 +1,19 @@
+pipeline {
+    agent any
+    stages {
+        stage('Clone Repository') {
+            steps {
+                git branch:  'feature/devops-engineer',  url:'https://github.com/sandeep-1511/Arcitech.git'
+            }
+        }
+        stage('Install Dependencies') {
+            steps {
+                sh '''
+                python3 -m venv venv
+                source venv/bin/activate
+                pip install flask gunicorn
+                '''
+            }
+        }
+    }
+}
