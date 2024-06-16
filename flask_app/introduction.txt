@@ -1,0 +1,27 @@
+Sandeep Kumar
+Profile
+A motivated and skilled DevOps Engineer with a B.Tech degree and a CGPA of 7.68. I possess one year of hands-on experience in AWS, DevOps, Linux, Python, and CI/CD. I have successfully contributed to two significant projects during this period. Passionate about continuous learning and improving processes to enhance productivity and efficiency.
+
+Experience
+DevOps Engineer
+One year of experience in the industry
+
+Hands-on experience with AWS, DevOps practices, Linux, Python, and CI/CD pipelines.
+Successfully completed two major projects, demonstrating strong problem-solving skills and the ability to work in a fast-paced environment.
+Education
+Bachelor of Technology (B.Tech)
+CGPA: 7.68
+
+Skills
+Cloud Platforms: AWS
+DevOps Tools: CI/CD pipelines, version control systems
+Programming Languages: Python
+Operating Systems: Linux
+Projects
+
+I have done two projects over this period 
+
+Personal Details
+Family: 5 members
+Hobbies: Traveling
+
