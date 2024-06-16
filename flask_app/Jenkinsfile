@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('Clone Repository') {
             steps {
-                git 'https://github.com/sandeep-1511/Arcitech.git'
+                git branch:  'feature/devops-engineer',  url:'https://github.com/sandeep-1511/Arcitech.git'
             }
         }
         stage('Install Dependencies') {
