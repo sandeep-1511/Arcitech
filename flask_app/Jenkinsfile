@@ -31,7 +31,7 @@ pipeline {
                     pip install flask gunicorn
 
                     # Create Gunicorn systemd service file
-                    sudo tee /etc/systemd/system/flask_app.service << EOL
+                    sudo tee /etc/systemd/system/flask_app.service > /dev/null << EOL
                     [Unit]
                     Description=Gunicorn instance to serve Flask app
                     After=network.target
@@ -55,7 +55,7 @@ pipeline {
                     sudo apt update
                     sudo apt install -y nginx
 
-                    sudo tee /etc/nginx/sites-available/flask_app << EOL
+                    sudo tee /etc/nginx/sites-available/flask_app > /dev/null << EOL
                     server {
                         listen 80;
                         server_name your_domain_or_ip;
