@@ -17,5 +17,16 @@ pipeline {
                 '''
             }
         }
+        stage('Run Tests') {
+            steps {
+                sh '''
+                #!/bin/bash
+                . ${WORKSPACE}/venv/bin/activate
+                # Add test commands here, for example:
+                # python -m unittest discover
+                echo "Running tests..."
+                '''
+            }
+        }
     }
 }
