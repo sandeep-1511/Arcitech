@@ -28,5 +28,15 @@ pipeline {
                 '''
             }
         }
+        stage('Deploy Application') {
+            steps {
+                sh '''
+                #!/bin/bash
+                . ${WORKSPACE}/venv/bin/activate
+                gunicorn -b 127.0.0.1:8000 hello:app &
+                sudo systemctl restart nginx
+                '''
+            }
+        }
     }
 }
