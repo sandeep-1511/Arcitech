@@ -30,31 +30,33 @@ pipeline {
         }
         stage('Deploy Application') {
             steps {
-                sh '''
-                #!/bin/bash
-                # Create the systemd service file for Gunicorn
-                echo "[Unit]
-Description=Gunicorn instance to serve Flask app
-After=network.target
+                script {
+                    def serviceFile = """
+                    [Unit]
+                    Description=Gunicorn instance to serve Flask app
+                    After=network.target
 
-[Service]
-User=ubuntu
-Group=www-data
-WorkingDirectory=${WORKSPACE}
-Environment='PATH=${WORKSPACE}/venv/bin'
-ExecStart=${WORKSPACE}/venv/bin/gunicorn --workers 3 --bind 127.0.0.1:8000 flask_app.hello:app
+                    [Service]
+                    User=ubuntu
+                    Group=www-data
+                    WorkingDirectory=${WORKSPACE}
+                    Environment='PATH=${WORKSPACE}/venv/bin'
+                    ExecStart=${WORKSPACE}/venv/bin/gunicorn --workers 3 --bind 127.0.0.1:8000 flask_app.hello:app
 
-[Install]
-WantedBy=multi-user.target" | sudo tee /etc/systemd/system/flask_app.service > /dev/null
+                    [Install]
+                    WantedBy=multi-user.target
+                    """
 
-                # Reload systemd to apply the new service file
-                sudo systemctl daemon-reload
+                    // Write the service file
+                    writeFile file: 'flask_app.service', text: serviceFile
 
-                # Restart Nginx and Gunicorn services
-                sudo systemctl restart nginx
-                sudo systemctl restart flask_app
-                '''
+                    // Create/Update the systemd service file
+                    sh 'sudo mv flask_app.service /etc/systemd/system/flask_app.service'
+                    sh 'sudo systemctl daemon-reload'
+                    sh 'sudo systemctl restart nginx'
+                    sh 'sudo systemctl restart flask_app'
+                }
             }
-        }       
+        }          
     }
 }
