@@ -34,7 +34,7 @@ pipeline {
                 #!/bin/bash
                 . ${WORKSPACE}/venv/bin/activate
                 sudo systemctl restart nginx
-                gunicorn -b 127.0.0.1:8000 flask_app.hello:app
+                nohup gunicorn -b 127.0.0.1:8000 flask_app.hello:app &
                 '''
             }
         }
