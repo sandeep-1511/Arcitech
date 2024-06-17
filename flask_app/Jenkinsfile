@@ -31,7 +31,7 @@ pipeline {
         stage('Deploy Application') {
             steps {
                 script {
-                    def serviceFile = """
+                    def serviceFileContent = """
                     [Unit]
                     Description=Gunicorn instance to serve Flask app
                     After=network.target
@@ -46,17 +46,15 @@ pipeline {
                     [Install]
                     WantedBy=multi-user.target
                     """
-
-                    // Write the service file
-                    writeFile file: 'flask_app.service', text: serviceFile
-
-                    // Create/Update the systemd service file
-                    sh 'sudo mv flask_app.service /etc/systemd/system/flask_app.service'
-                    sh 'sudo systemctl daemon-reload'
-                    sh 'sudo systemctl restart nginx'
-                    sh 'sudo systemctl restart flask_app'
+                    
+                    sh """
+                    echo '${serviceFileContent}' | sudo tee /etc/systemd/system/flask_app.service
+                    sudo systemctl daemon-reload
+                    sudo systemctl restart nginx
+                    sudo systemctl restart flask_app
+                    """
                 }
             }
-        }          
+        }
     }
 }
