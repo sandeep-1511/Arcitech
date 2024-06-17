@@ -12,7 +12,7 @@ pipeline {
                 #!/bin/bash
                 cd ${WORKSPACE}
                 python3 -m venv venv
-                source venv/bin/activate
+                . venv/bin/activate
                 pip install flask gunicorn
                 '''
             }
