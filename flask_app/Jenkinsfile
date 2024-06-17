@@ -33,8 +33,7 @@ pipeline {
                 sh '''
                 #!/bin/bash
                 # Create the systemd service file for Gunicorn
-                sudo bash -c 'cat > /etc/systemd/system/flask_app.service <<EOF
-                [Unit]
+                echo "[Unit]
                 Description=Gunicorn instance to serve Flask app
                 After=network.target
 
@@ -42,12 +41,11 @@ pipeline {
                 User=ubuntu
                 Group=www-data
                 WorkingDirectory=${WORKSPACE}
-                Environment="PATH=${WORKSPACE}/venv/bin"
+                Environment='PATH=${WORKSPACE}/venv/bin'
                 ExecStart=${WORKSPACE}/venv/bin/gunicorn --workers 3 --bind 127.0.0.1:8000 flask_app.hello:app
 
                 [Install]
-                WantedBy=multi-user.target
-                EOF'
+                WantedBy=multi-user.target" | sudo tee /etc/systemd/system/flask_app.service
 
                 # Reload systemd to apply the new service file
                 sudo systemctl daemon-reload
@@ -57,6 +55,6 @@ pipeline {
                 sudo systemctl restart flask_app
                 '''
             }
-        }
+        }         
     }
 }
